@@ -9,62 +9,68 @@ public class TugasAkhir {
         
         Scanner sc = new Scanner(System.in);
         
-        boolean cont = true;
+        boolean cont = true, firstLoop = true;
+        String ansStr;
+        int ans, pointer, order;
 
+        String[] goods = {
+            "Colorful Nvidia GTX 1650",
+            "ASRock AMD RX 6600",
+            "MSI Nvidia RTX 3050",
+            "ROG Strix Nvidia RTX 3080",
+            "Gigabyte AMD RX 7900 XTX",
+            "Zotac Nvidia RTX 4090",
+        };
+
+        int[] stock = {
+            10,
+            14,
+            7,
+            4,
+            2,
+            1
+        };
+
+        int[] price = {
+            2599000,
+            4150000,
+            5150000,
+            14450000,
+            16200000,
+            30999000,
+        };
+        
         do{
-            String[] goods = {
-                "Colorful Nvidia GTX 1650",
-                "ASRock AMD RX 6600",
-                "MSI Nvidia RTX 3050",
-                "ROG Strix Nvidia RTX 3080",
-                "Gigabyte AMD RX 7900 XTX",
-                "Zotac Nvidia RTX 4090",
-            };
-
-            int[] stock = {
-                10,
-                14,
-                7,
-                4,
-                2,
-                1
-            };
             
-            int[] price = {
-                2599000,
-                4150000,
-                5150000,
-                14450000,
-                16200000,
-                30999000,
-            };
-            
-
-            header();
+            if(firstLoop){
+                header();
+                System.out.println("\nI like your spirit!");
+                System.out.println("Here is our price list. Feel free to take a look.");
+            }
             
             
             printMenu(goods, stock, price);
-
+            // batas atas
+            
             System.out.println("So.. are you interested to order one ? (yes/no)");
 //            String ans = sc.nextLine();
-            String ans = "yes";
-            if(!ans.equalsIgnoreCase("yes")){
+            ansStr = "yes";
+            if(!ansStr.equalsIgnoreCase("yes")){
                 break;
             }
-            
-            int ans2;
-            int pointer;
+            //batas bawah
+
             do{
             System.out.println("Which GPU would you like to order ? (type in the number)");
-            ans2 = sc.nextInt();
-            pointer = ans2-1;
-            if(ans2>goods.length || ans2<1)
+            ans = sc.nextInt();
+            pointer = ans-1;
+            if(ans>goods.length || ans<1)
                 System.out.println("Sorry, invalid input.");
-            } while(ans2>goods.length || ans2<1);
-            
+            } while(ans>goods.length || ans<1);
+
             System.out.println("\nAh! so you wanna order the " + goods[pointer] + ".");
             System.out.println("Good choice!\n");
-            
+
             if(stock[pointer] == 1){
                 System.out.println("You're in luck.");
                 System.out.println("Only 1 is currently in stock!");
@@ -72,11 +78,11 @@ public class TugasAkhir {
                 System.out.println("But unfortunately " + goods[pointer] + " is currently out of stock.");
             else
                 System.out.println(stock[pointer] + " are currently in stock!");
-                
+
 //            System.out.println("");
-            
-            int order = 0;
-            
+
+            order = 0;
+
             do{
                 System.out.print("\nHow many would you like to order?\n> ");
                 order = sc.nextInt();
@@ -90,24 +96,27 @@ public class TugasAkhir {
                 } else if(order < 1)
                     System.out.println("Order quantity must be positive.");
             } while(order > stock[pointer] || order < 1);
-            System.out.println("order quantity : " + order);
+            orderArr[][]
+            System.out.printf("order quantity : %d\n\n", order);
             stock[pointer] -= order;
             invoice(goods, stock, price, pointer, order);
-            
+
             System.out.println("Do you want to order again? (yes/no)");
-            ans = sc.nextLine();
-            if(!ans.equalsIgnoreCase("yes")){
+            sc.nextLine();
+            ansStr = sc.nextLine();
+            if(!ansStr.equalsIgnoreCase("yes")){
                 System.out.println("Thank you, come by another time.");
                 System.exit(0);
             }
-                
+            firstLoop = false;
+
         } while(cont);
         
         sc.close();
     }
     
     static void invoice(String[] goods, int[] stock, int[] price, int pointer, int order){
-        System.out.println("Here is your invoice.\n");
+        System.out.println("Here is your invoice.");
         System.out.println("Please recheck your order.\n");
         System.out.println("======================== INVOICE ==========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
@@ -126,12 +135,9 @@ public class TugasAkhir {
         divider();
     }
     
-    
     static void printMenu(String[] goods, int[] stock, int[] price){
         
-        System.out.println("\nI like your spirit!");
-        System.out.println("Here is our price list. Feel free to take a look.\n");
-        System.out.println("======================= LIST HARGA ========================");
+        System.out.println("\n======================= LIST HARGA ========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
@@ -150,8 +156,6 @@ public class TugasAkhir {
         divider();
         
     }
-    
-    
     
     static void divider(){
         System.out.println("===========================================================");
