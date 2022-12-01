@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class TugasAkhir {
     
     public static void main(String[] args) {
-        
+        //1
         Scanner sc = new Scanner(System.in);
         
         boolean cont = true, firstLoop = true;
