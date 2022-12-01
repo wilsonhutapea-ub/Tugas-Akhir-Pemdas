@@ -1,6 +1,7 @@
 
 package tugasakhir;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TugasAkhir {
@@ -11,8 +12,8 @@ public class TugasAkhir {
         
         boolean cont = true, firstLoop = true;
         String ansStr;
-        int ans, pointer, order;
-
+        int ans, pointer, orderQty;
+        int[] orderQtyArr = new int[6];
         String[] goods = {
             "Colorful Nvidia GTX 1650",
             "ASRock AMD RX 6600",
@@ -40,6 +41,8 @@ public class TugasAkhir {
             30999000,
         };
         
+        
+        
         do{
             
             if(firstLoop){
@@ -50,15 +53,6 @@ public class TugasAkhir {
             
             
             printMenu(goods, stock, price);
-            // batas atas
-            
-            System.out.println("So.. are you interested to order one ? (yes/no)");
-//            String ans = sc.nextLine();
-            ansStr = "yes";
-            if(!ansStr.equalsIgnoreCase("yes")){
-                break;
-            }
-            //batas bawah
 
             do{
             System.out.println("Which GPU would you like to order ? (type in the number)");
@@ -81,25 +75,29 @@ public class TugasAkhir {
 
 //            System.out.println("");
 
-            order = 0;
+            orderQty = 0;
 
             do{
                 System.out.print("\nHow many would you like to order?\n> ");
-                order = sc.nextInt();
-                if(order > stock[pointer]){
+                orderQty = sc.nextInt();
+                if(orderQty > stock[pointer]){
                     System.out.print("Sorry. Only " + stock[pointer]);
                     if(stock[pointer] == 1){
                         System.out.print(" is ");
                     } else
                     System.out.print(" are ");
                     System.out.println("currently in stock!");
-                } else if(order < 1)
+                } else if(orderQty < 1)
                     System.out.println("Order quantity must be positive.");
-            } while(order > stock[pointer] || order < 1);
-            orderArr[][]
-            System.out.printf("order quantity : %d\n\n", order);
-            stock[pointer] -= order;
-            invoice(goods, stock, price, pointer, order);
+            } while(orderQty > stock[pointer] || orderQty < 1);
+            
+            // stock
+            orderQtyArr[pointer] += orderQty;
+            System.out.println(Arrays.toString(orderQtyArr));
+                    
+            System.out.printf("order quantity : %d\n\n", orderQty);
+            stock[pointer] -= orderQty;
+            invoice(goods, stock, price, orderQtyArr);
 
             System.out.println("Do you want to order again? (yes/no)");
             sc.nextLine();
@@ -115,7 +113,10 @@ public class TugasAkhir {
         sc.close();
     }
     
-    static void invoice(String[] goods, int[] stock, int[] price, int pointer, int order){
+    static void invoice(String[] goods, int[] stock, int[] price, int[] orderQtyArr){
+        int typeCount = 0;
+        int totalPrice = 0;
+        int pointer = 0;
         System.out.println("Here is your invoice.");
         System.out.println("Please recheck your order.\n");
         System.out.println("======================== INVOICE ==========================");
@@ -126,12 +127,23 @@ public class TugasAkhir {
                 " Total Price  ");
         divider();
         
-        System.out.printf("| %d | %-26s | %5d | Rp %,11d |\n",
-                    1, 
-                    goods[pointer],
-                    order,
-                    price[pointer]*order
+        for (int i = 0; i < orderQtyArr.length; i++) {
+            if(orderQtyArr[i] == 0)
+                continue;
+            System.out.printf("| %d | %-26s | %5d | Rp %,11d |\n",
+                        typeCount+1, 
+                        goods[i],
+                        orderQtyArr[i],
+                        price[i]*orderQtyArr[i]
             );
+            totalPrice += price[i]*orderQtyArr[i];
+            typeCount++;
+            pointer++;
+        }
+        System.out.println("typecount = " + typeCount);
+        
+        divider();
+        System.out.printf("| %38s | Rp %,11d |\n","| TOTAL",totalPrice);
         divider();
     }
     
