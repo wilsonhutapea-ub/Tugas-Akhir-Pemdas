@@ -28,16 +28,18 @@ public class TugasAkhir {
         printHeader();
 
         System.out.println("Ralph: Hi there!");
-        System.out.println("I'm Raywilfred, but you can call me Ralph. I will help \nyou buy a GPU in this store.");
+        System.out.println("Ralph: I'm Ralph, your personal shopping companion. I will \nhelp you buy GPUs in this store.");
         // TODO Hi, Ralph!
-        System.out.println("How should I call you, friend?");
+        System.out.print("Ralph: How should I call you, friend?\n> ");
         String name = sc.nextLine();
         System.out.printf("Ralph: Nice to meet you %s.\n", name);
-        System.out.println("Ralph: So in the scale of 1 to 10, how interested are you \nto take home your dream GPU ?");
-
+        System.out.println("Ralph: So in the scale of 1 to 10, how excited are you \nto take home your dream GPU ?");
+        System.out.println("(1 = Not excited, 10 = Very excited)");
+        // TODO if outside 1-10
         String ans = "yo";
 //        String ans = "10";
         int ansInt = 0;
+        System.out.printf("%s: ",name);
         try{
             ans = sc.nextLine();
             ansInt = Integer.parseInt(ans);
@@ -49,32 +51,32 @@ public class TugasAkhir {
         System.out.println(ansInt);
 
         if(ansInt >= 1 && ansInt <= 3){
-            System.out.println(":(");
+            System.out.println("Ralph: :(");
         } else if(ansInt >= 4 && ansInt <= 6) {
-            System.out.println("ok..");
+            System.out.println("Ralph: ok..");
         } else if(ansInt >= 7 && ansInt <= 10){
-            System.out.println("I like your spirit");
+            System.out.println("Ralph: I like your spirit");
         } else if(ansInt > 10){
-            System.out.println("Outstanding spirit!");
+            System.out.println("Ralph: Outstanding spirit!");
         } else {
             System.out.println(":(");
             System.out.println("alr bye");
             System.exit(0);
         }
 
-        System.out.println("Here is our price list. Feel free to take a look.");
+        System.out.println("Ralph: Here is our price list. Feel free to take a look.");
 
         do{
             printMenu();
 
             do{
                 // TODO if input outside 1-6, dont continue, repeat.
-                System.out.print("\nWhich GPU would you like to order ? (type in the number)\n> ");
+                System.out.printf("\nRalph: Which GPU would you like to order ? (type in the number)\n%s: ",name);
                 ans_Int = sc.nextInt();
                 //disini
                 if(ans_Int < 1 || ans_Int > 6){
                     while(ans_Int < 1 || ans_Int > 6){
-                        System.out.println("Input must be 1-6");
+                        System.out.println("Ralph: It seems your input is invalid. Input must be 1-6");
                         System.out.print("> ");
                         ans_Int = sc.nextInt();
                         // TODO change into nextLine
@@ -83,23 +85,23 @@ public class TugasAkhir {
                 }
                 pointer = ans_Int-1;
                 if(ans_Int>goods.length || ans_Int<1){
-                    System.out.println("Sorry, invalid input.");
+                    System.out.println("Ralph: Sorry, invalid input.");
                     break;
                 }
                 if(stock[pointer] == 0){
-                    System.out.println("\nAh! so you wanna order the " + goods[pointer] + ".");
-                    System.out.println("Good choice!");
-                    System.out.println("But unfortunately " + goods[pointer] + " is currently out of stock.");
+                    System.out.println("\nRalph: Ah! so you wanna order the " + goods[pointer] + ".");
+                    System.out.println("Ralph: Good choice!");
+                    System.out.println("Ralph: But unfortunately " + goods[pointer] + " is \ncurrently out of stock.");
                 }
             } while(ans_Int>goods.length || ans_Int<1 || stock[pointer] == 0);
 
             if(stock[pointer] != 0){
-                System.out.println("\nAh! so you wanna order the " + goods[pointer] + ".");
-                System.out.println("Good choice!\n");
+                System.out.println("\nRalph: Ah! so you wanna order the " + goods[pointer] + ".");
+                System.out.println("Ralph: Good choice!\n");
 
                 if(stock[pointer] == 1){
-                    System.out.println("You're in luck.");
-                    System.out.println("Only 1 is currently in stock!");
+                    System.out.println("Ralph: You're in luck.");
+                    System.out.println("Ralph: Only 1 is currently in stock!");
                 } else
                     System.out.println(stock[pointer] + " are currently in stock!");
             }
@@ -108,17 +110,17 @@ public class TugasAkhir {
 
             if(stock[pointer] != 0){
                 do{
-                    System.out.print("\nHow many would you like to order?\n> ");
+                    System.out.print("\nRalph: How many would you like to order?\n> ");
                     orderQty = sc.nextInt();
                     if(orderQty > stock[pointer]){
-                        System.out.print("Sorry. Only " + stock[pointer]);
+                        System.out.print("Ralph: Sorry. Only " + stock[pointer]);
                         if(stock[pointer] == 1){
                             System.out.print(" is ");
                         } else
                             System.out.print(" are ");
                         System.out.println("currently in stock!");
                     } else if(orderQty < 1)
-                        System.out.println("Order quantity must be positive.");
+                        System.out.printf("Ralph: %s, order quantity must be positive.\n",name);
                 } while(orderQty > stock[pointer] || orderQty < 1);
             }
 
@@ -135,16 +137,17 @@ public class TugasAkhir {
             sc.nextLine();
             ansStr = sc.nextLine();
             if(ansStr.equalsIgnoreCase("n")){
-                System.out.println("Alright. Now let's talk about payment.");
-                System.out.println("There is 10% tax.");
-                System.out.println("There is 5% discount if you pay with credit card.");
-                System.out.println("Please choose your payment method:");
+                System.out.println("Ralph: Alright. Now let's talk about payment.");
+                System.out.println("Ralph: There is 10% tax.");
+                System.out.println("Ralph: There is 5% discount if you pay with credit card.");
+                System.out.printf("Ralph: %s, what is your preferred method of payment?\n", name);
                 System.out.println("1. Cash\n2. Card\n> ");
+                System.out.printf("%s: ",name);
 
                 do{
                     ans_Int = sc.nextInt();
                     if(ans_Int < 1 || ans_Int > 2){
-                        System.out.print("Invalid input. Please try again.\n> ");
+                        System.out.print("Ralph: Invalid input. Please try again.\n> ");
                     }
                 } while(ans_Int < 1 || ans_Int > 2);
                 boolean disc = false;
@@ -165,8 +168,9 @@ public class TugasAkhir {
         int typeCount = 0; // berapa jenis barang yang dipesan
         int totalPrice = 0;
         int grandTotal;
+        int disc_Int = 0;
 
-        System.out.println("Here is your invoice.");
+        System.out.println("Ralph: Here is your invoice.");
         System.out.println("======================== INVOICE ==========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
@@ -188,12 +192,13 @@ public class TugasAkhir {
             typeCount++;
         }
 
-        if(disc)
+        if(disc) {
             grandTotal = (int) (totalPrice * 0.95);
+            disc_Int = (int) (0.05 * totalPrice);
+        }
         else {
             grandTotal = (int) (totalPrice);
         }
-        int disc_Int = (int) (0.05 * totalPrice);
         int totalPriceAfterDisc = totalPrice-disc_Int;
         int tax = (int)(totalPriceAfterDisc*0.1);
         grandTotal = totalPriceAfterDisc+tax;
@@ -201,7 +206,7 @@ public class TugasAkhir {
         // TODO discount & tax arrangement?
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","TOTAL",totalPrice);
-        System.out.printf("| %38s | Rp (%,9d) |\n","DISCOUNT",disc_Int);
+        System.out.printf("| %38s | Rp %(,11d |\n","DISCOUNT",disc_Int);
         System.out.printf("| %38s | Rp %,11d |\n","TAX",tax);
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","GRAND TOTAL",grandTotal);
@@ -210,7 +215,7 @@ public class TugasAkhir {
     static int printCart(int[] orderQtyArr){
         int typeCount = 0;
         int totalPrice = 0;
-        System.out.println("Here is your cart. Please recheck your order.\n");
+        System.out.println("\nRalph: Here is your cart. Please recheck your order.\n");
         System.out.println("========================== CART ===========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
@@ -267,9 +272,7 @@ public class TugasAkhir {
     static void printHeader(){
         System.out.println("======================= WELCOME TO ========================");
         System.out.println("================= RAYWILFRED GAMING SHOP ==================");
-        System.out.println("");
-        System.out.println("Here you can buy PC parts like CPU, SSD, Mobo, and many \nmore.");
-        System.out.println("");
+        System.out.println("\nHere you can buy PC parts like CPU, SSD, Mobo, and many \nmore.\n");
     }
 
 }
