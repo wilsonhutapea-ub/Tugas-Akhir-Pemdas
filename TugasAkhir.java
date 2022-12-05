@@ -14,7 +14,7 @@ public class TugasAkhir {
 
     static int[] price = {2599000, 4150000, 5150000, 14450000, 16200000,30999000};
 
-    //TODO if all stock == 0, print special output & output all stock r in your card already :D
+
 
     public static void main(String[] args) {
 
@@ -22,14 +22,14 @@ public class TugasAkhir {
 
         boolean cont = true;
         String ansStr;
-        int ans_Int, pointer = 0, orderQty = 0, totalPrice;
+        int ans_Int = 0, pointer = 0, orderQty = 0, totalPrice;
         int[] orderQtyArr = new int[6];
 
         printHeader();
 
         System.out.println("Ralph: Hi there!");
-        System.out.println("Ralph: I'm Ralph, your personal shopping companion. I will \nhelp you buy GPUs in this store.");
         // TODO Hi, Ralph!
+        System.out.println("Ralph: I'm Ralph, your personal shopping companion. I will \nhelp you buy GPUs in this store.");
         System.out.print("Ralph: How should I call you, friend?\n> ");
         String name = sc.nextLine();
         System.out.printf("Ralph: Nice to meet you %s.\n", name);
@@ -40,22 +40,24 @@ public class TugasAkhir {
 //        String ans = "10";
         int ansInt = 0;
         System.out.printf("%s: ",name);
+        ans = sc.nextLine();
         try{
-            ans = sc.nextLine();
             ansInt = Integer.parseInt(ans);
         } catch (NumberFormatException e){
-            System.out.println("NFE");
-            System.exit(0);
+            System.out.println("\nException in thread main java.lang.NumberFormatException.\n");
+            System.out.println("Just kidding XD.... back to the program");
+            ansInt = 10;
         }
 
-        System.out.println(ansInt);
+//        System.out.println(ansInt);
 
+        System.out.println();
         if(ansInt >= 1 && ansInt <= 3){
             System.out.println("Ralph: :(");
         } else if(ansInt >= 4 && ansInt <= 6) {
-            System.out.println("Ralph: ok..");
+            System.out.println("Ralph: C'mon, cheer up a bit.");
         } else if(ansInt >= 7 && ansInt <= 10){
-            System.out.println("Ralph: I like your spirit");
+            System.out.println("Ralph: I like your spirit.");
         } else if(ansInt > 10){
             System.out.println("Ralph: Outstanding spirit!");
         } else {
@@ -70,22 +72,29 @@ public class TugasAkhir {
             printMenu();
 
             do{
-                // TODO if input outside 1-6, dont continue, repeat.
+                // TODO if input outside 1-6, don't continue, repeat.
                 System.out.printf("\nRalph: Which GPU would you like to order ? (type in the number)\n%s: ",name);
-                ans_Int = sc.nextInt();
-                //disini
-                if(ans_Int < 1 || ans_Int > 6){
-                    while(ans_Int < 1 || ans_Int > 6){
-                        System.out.println("Ralph: It seems your input is invalid. Input must be 1-6");
-                        System.out.print("> ");
-                        ans_Int = sc.nextInt();
-                        // TODO change into nextLine
+
+
+
+                do{
+                    try{
+                        ans = sc.nextLine();
+                        ans_Int = Integer.parseInt(ans);
+                    } catch (NumberFormatException e){
+                        System.out.println("\nException in thread main java.lang.NumberFormatException.\n");
+                        System.out.println("Just kidding XD.... back to the program");
+                        ansInt = 0;
                     }
 
-                }
-                pointer = ans_Int-1;
+                    if(ans_Int < 1 || ans_Int > 6){
+                        System.out.println("Ralph: It seems your input is invalid. Input must be 1-6.\n> ");
+                    }
+                } while (ans_Int < 1 || ans_Int > 6);
+
+                pointer = ans_Int - 1;
                 if(ans_Int>goods.length || ans_Int<1){
-                    System.out.println("Ralph: Sorry, invalid input.");
+                    System.out.println("Ralph: It seems your input is invalid. Input must be 1-6.");
                     break;
                 }
                 if(stock[pointer] == 0){
@@ -96,7 +105,7 @@ public class TugasAkhir {
             } while(ans_Int>goods.length || ans_Int<1 || stock[pointer] == 0);
 
             if(stock[pointer] != 0){
-                System.out.println("\nRalph: Ah! so you wanna order the " + goods[pointer] + ".");
+                System.out.println("\nRalph: Ah! so you want to order the " + goods[pointer] + ".");
                 System.out.println("Ralph: Good choice!\n");
 
                 if(stock[pointer] == 1){
@@ -134,9 +143,11 @@ public class TugasAkhir {
 //            System.out.println(totalPrice);
             // TODO if ansStr does not equal y/n, repeat input
             System.out.println("Do you want to order again? (y/n)");
+            //TODO if all stock == 0, print special output & output all stock r in your card already :D
             sc.nextLine();
             ansStr = sc.nextLine();
-            if(ansStr.equalsIgnoreCase("n")){
+            if(!ansStr.equalsIgnoreCase("y")){
+                cont = false;
                 System.out.println("Ralph: Alright. Now let's talk about payment.");
                 System.out.println("Ralph: There is 10% tax.");
                 System.out.println("Ralph: There is 5% discount if you pay with credit card.");
@@ -156,7 +167,6 @@ public class TugasAkhir {
                     disc = true;
                 }
                 printInvoice(orderQtyArr, disc);
-                System.exit(0);
             }
 
         } while(cont);
