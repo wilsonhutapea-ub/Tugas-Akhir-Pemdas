@@ -125,7 +125,7 @@ public class TugasAkhir {
 
                 payWithCard = ansInt == 2;
 
-                printInvoice(orderQtyArr, payWithCard);
+                printReceipt(orderQtyArr, payWithCard);
             }
 
         } while(cont);
@@ -136,7 +136,7 @@ public class TugasAkhir {
         sc.close();
     }
 
-    static void printInvoice(int[] orderQtyArr, boolean payWithCard){
+    static void printReceipt(int[] orderQtyArr, boolean payWithCard){
         int typeCount = 0; // berapa jenis barang berbeda yang dipesan
         int subTotal = 0, disc_Int = 0;
 
