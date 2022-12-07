@@ -18,8 +18,8 @@ public class TugasAkhir {
 
         Scanner sc = new Scanner(System.in);
 
-        boolean cont = true, invalidInput, disc, soldOut = false;
-        String ansStr;
+        boolean cont = true, invalidInput, payWithCard, soldOut = false;
+        String ansStr = null;
         int ansInt, pointer, orderQty;
         int[] orderQtyArr = new int[goods.length];
 
@@ -81,23 +81,22 @@ public class TugasAkhir {
                 }
             } while(orderQty > stock[pointer]);
 
-
-            // stock
             orderQtyArr[pointer] += orderQty;
 
             stock[pointer] -= orderQty;
 
             for (int i : stock) {
-                if(i != 0)
+                if(i != 0) {
+                    soldOut = false;
                     break;
+                }
                 soldOut = true;
             }
             
-            if(soldOut == false) {
+            if(!soldOut) {
                 printCart(orderQtyArr);
 
                 System.out.println("Do you want to order again? (y/n)");
-                //TODO if all stock == 0, print special output & output all stock r in your card already :D
 
                 invalidInput = false;
                 do{
@@ -107,11 +106,10 @@ public class TugasAkhir {
                         System.out.printf("Ralph: It seems your input is invalid. Input must contain \ny or n.\n%s: ",name);
                     }
                 } while (invalidInput);
-            }
+            } else
+                System.out.println("\nRalph: Wow, our entire stock is in your cart! There is nothing \nleft to buy. Let's proceed with the payment.");
 
-
-
-            if(!ansStr.contains("y")){
+            if(soldOut || !ansStr.contains("y") ){
                 cont = false;
                 System.out.println("\nRalph: Alright. Now let's talk about payment.");
                 System.out.println("Ralph: There is 10% tax, and there is 5% discount if you \npay with credit card.");
@@ -121,28 +119,26 @@ public class TugasAkhir {
 
                 ansInt = getInt(2);
 
-                disc = ansInt == 2;
+                payWithCard = ansInt == 2;
 
-                printInvoice(orderQtyArr, disc);
+                printInvoice(orderQtyArr, payWithCard);
             }
 
         } while(cont);
 
+        System.out.println("Thank you for shopping in our store. Feel free to come back \nnext time.");
+
         sc.close();
     }
 
-    static void printInvoice(int[] orderQtyArr, boolean disc){
+    static void printInvoice(int[] orderQtyArr, boolean payWithCard){
         int typeCount = 0; // berapa jenis barang berbeda yang dipesan
         int subTotal = 0;
         int total;
         int disc_Int = 0;
 
-        if(disc) {
-            disc_Int = (int) (0.05 * subTotal);
-        }
-
-        System.out.println("Ralph: Here is your invoice.");
-        System.out.println("======================== INVOICE ==========================");
+        System.out.println("\nRalph: Here is your invoice.");
+        System.out.println("\n======================== INVOICE ==========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
@@ -163,19 +159,29 @@ public class TugasAkhir {
             typeCount++;
         }
 
+        if(payWithCard) {
+            disc_Int = (int) (0.05 * subTotal);
+        }
 
         int subTotalAfterDisc = subTotal-disc_Int;
         int tax = (int)(subTotalAfterDisc*0.1);
         total = subTotalAfterDisc+tax;
-        // TODO CASH if cash, no CASH if no cash.
-        // TODO discount & tax arrangement?
+
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","SUBTOTAL",subTotal);
-        System.out.printf("| %38s | Rp %(,11d |\n","DISCOUNT",disc_Int);
+        System.out.printf("| %38s | Rp %,11d |\n","DISCOUNT",disc_Int);
         System.out.printf("| %38s | Rp %,11d |\n","TAX",tax);
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","TOTAL",total);
         printDivider();
+
+        // TODO CASH if cash, no CASH if no cash.
+
+        if(!payWithCard){
+            System.out.println("Ralph: How much cash do you want to pay with?");
+        }
+
+
     }
 
     static void printCart(int[] orderQtyArr){
