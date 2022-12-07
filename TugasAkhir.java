@@ -13,6 +13,7 @@ public class TugasAkhir {
 
     static int[] price = {2599000, 4150000, 5150000, 14450000, 16200000,30999000};
     static String name;
+    static int total;
 
     public static void main(String[] args) {
 
@@ -20,7 +21,7 @@ public class TugasAkhir {
 
         boolean cont = true, invalidInput, payWithCard, soldOut = false;
         String ansStr = null;
-        int ansInt, pointer, orderQty;
+        int ansInt, pointer, orderQty = 0;
         int[] orderQtyArr = new int[goods.length];
 
         printHeader();
@@ -64,22 +65,27 @@ public class TugasAkhir {
             if(stock[pointer] == 1){
                 System.out.println("\nRalph: You're in luck.");
                 System.out.println("Ralph: Only 1 is currently in stock!");
-            } else
+            } else {
                 System.out.println(stock[pointer] + " are currently in stock!");
+            }
 
-            do{
-                System.out.print("\nRalph: How many would you like to order?\n> ");
-                orderQty = getInt();
+            if(stock[pointer] == 1)
+                orderQty = 1;
+            else {
+                do{
+                    System.out.print("\nRalph: How many would you like to order?\n> ");
+                    orderQty = getInt();
 
-                if(orderQty > stock[pointer]){
-                    System.out.print("Ralph: Sorry. Only " + stock[pointer]);
-                    if(stock[pointer] == 1){
-                        System.out.print(" is ");
-                    } else
-                        System.out.print(" are ");
-                    System.out.println("currently in stock!");
-                }
-            } while(orderQty > stock[pointer]);
+                    if(orderQty > stock[pointer]){
+                        System.out.print("Ralph: Sorry. Only " + stock[pointer]);
+                        if(stock[pointer] == 1){
+                            System.out.print(" is ");
+                        } else
+                            System.out.print(" are ");
+                        System.out.println("currently in stock!");
+                    }
+                } while(orderQty > stock[pointer]);
+            }
 
             orderQtyArr[pointer] += orderQty;
 
@@ -98,10 +104,10 @@ public class TugasAkhir {
 
                 System.out.println("Do you want to order again? (y/n)");
 
-                invalidInput = false;
                 do{
+                    invalidInput = false;
                     ansStr = sc.nextLine();
-                    if(!ansStr.contains("y") && !ansStr.contains("n")){
+                    if(!ansStr.contains("y") && !ansStr.contains("n") && !ansStr.contains("Y") && !ansStr.contains("N")){
                         invalidInput = true;
                         System.out.printf("Ralph: It seems your input is invalid. Input must contain \ny or n.\n%s: ",name);
                     }
@@ -109,7 +115,11 @@ public class TugasAkhir {
             } else
                 System.out.println("\nRalph: Wow, our entire stock is in your cart! There is nothing \nleft to buy. Let's proceed with the payment.");
 
-            if(soldOut || !ansStr.contains("y") ){
+            System.out.println(soldOut);
+            System.out.println(!ansStr.contains("y"));
+            System.out.println(!ansStr.contains("Y"));
+
+            if(soldOut || (!ansStr.contains("y") && !ansStr.contains("Y"))){
                 cont = false;
                 System.out.println("\nRalph: Alright. Now let's talk about payment.");
                 System.out.println("Ralph: There is 10% tax, and there is 5% discount if you \npay with credit card.");
@@ -133,17 +143,16 @@ public class TugasAkhir {
 
     static void printInvoice(int[] orderQtyArr, boolean payWithCard){
         int typeCount = 0; // berapa jenis barang berbeda yang dipesan
-        int subTotal = 0;
-        int total;
-        int disc_Int = 0;
+        int subTotal = 0, disc_Int = 0;
 
-        System.out.println("\nRalph: Here is your invoice.");
-        System.out.println("\n======================== INVOICE ==========================");
+        System.out.println("\nRalph: Here is your receipt.");
+        System.out.println("\n======================== RECEIPT ==========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
                 "Qty",
                 " Total Price  ");
+
         printDivider();
 
         for (int i = 0; i < orderQtyArr.length; i++) {
@@ -163,7 +172,7 @@ public class TugasAkhir {
             disc_Int = (int) (0.05 * subTotal);
         }
 
-        int subTotalAfterDisc = subTotal-disc_Int;
+        int subTotalAfterDisc = subTotal - disc_Int;
         int tax = (int)(subTotalAfterDisc*0.1);
         total = subTotalAfterDisc+tax;
 
@@ -174,13 +183,6 @@ public class TugasAkhir {
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","TOTAL",total);
         printDivider();
-
-        // TODO CASH if cash, no CASH if no cash.
-
-        if(!payWithCard){
-            System.out.println("Ralph: How much cash do you want to pay with?");
-        }
-
 
     }
 
@@ -194,6 +196,7 @@ public class TugasAkhir {
                 "       Product Name       ",
                 "Qty",
                 " Total Price  ");
+
         printDivider();
 
         for (int i = 0; i < orderQtyArr.length; i++) {
