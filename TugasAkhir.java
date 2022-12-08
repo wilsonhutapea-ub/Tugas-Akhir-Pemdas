@@ -137,6 +137,10 @@ public class TugasAkhir {
     }
 
     static void printReceipt(int[] orderQtyArr, boolean payWithCard){
+        /*
+        Method untuk menampilkan struk belanja.
+         */
+
         int typeCount = 0; // berapa jenis barang berbeda yang dipesan
         int subTotal = 0, disc_Int = 0;
 
@@ -182,6 +186,10 @@ public class TugasAkhir {
     }
 
     static void printCart(int[] orderQtyArr){
+        /*
+        Method untuk menampilkan keranjang belanja
+         */
+
         int typeCount = 0;
         int totalPrice = 0;
         System.out.println("\nRalph: Here is your cart. Please recheck your order.\n");
@@ -213,6 +221,9 @@ public class TugasAkhir {
     }
 
     static void printMenu(){
+        /*
+        Method untuk menampilkan menu
+         */
 
         System.out.println("\n======================= LIST HARGA ========================");
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
@@ -235,16 +246,28 @@ public class TugasAkhir {
     }
 
     static void printDivider(){
+        /*
+        Method untuk menampilkan pembatas.
+         */
         System.out.println("===========================================================");
     }
 
     static void printHeader(){
+        /*
+        Method untuk menampilkan awalan program
+         */
         System.out.println("======================= WELCOME TO ========================");
         System.out.println("================ RAYWILFRED COMPUTER SHOP =================");
         System.out.println("\nHere you can buy PC parts like CPU, SSD, Mobo, and build \nyour dream PC.\n");
     }
 
     static int getInt(int upperLimit){
+        /*
+        Method untuk mengambil input dari user dengan parameter
+        batas atas input yang diminta oleh program.
+        Misal program menginginkan input 1-6 saja maka parameter akan diisi 6
+        */
+
         Scanner sc = new Scanner(System.in);
         int result = 0;
         boolean error;
@@ -271,6 +294,11 @@ public class TugasAkhir {
     }
 
     static int getInt(){
+        /*
+        Method overloading dengan perbedaan tidak ada batas atas yang ditentukan
+        sehingga parameter dikosongkan.
+         */
+
         Scanner sc = new Scanner(System.in);
         int result = 0;
         boolean error;
