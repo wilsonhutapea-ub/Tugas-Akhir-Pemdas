@@ -42,7 +42,7 @@ public class TugasAkhir {
         else if(ansInt >= 7 && ansInt <= 10)
             System.out.println("Ralph: I like your spirit.");
 
-        System.out.println("\nRalph: Here is our price list. Feel free to take a look.");
+        System.out.println("\nRalph: Here is our price list. Feel free to take a look.\n");
 
         do{
             printMenu();
@@ -146,6 +146,7 @@ public class TugasAkhir {
 
         System.out.println("\nRalph: Here is your receipt.");
         System.out.println("\n======================== RECEIPT ==========================");
+        printDivider();
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
@@ -179,9 +180,9 @@ public class TugasAkhir {
         System.out.printf("| %38s | Rp %,11d |\n","SUBTOTAL",subTotal);
         System.out.printf("| %38s | Rp %,11d |\n","DISCOUNT",disc_Int);
         System.out.printf("| %38s | Rp %,11d |\n","TAX",tax);
-        printDivider();
+        printDivider2();
         System.out.printf("| %38s | Rp %,11d |\n","TOTAL",total);
-        printDivider();
+        printDivider2();
 
     }
 
@@ -194,6 +195,7 @@ public class TugasAkhir {
         int totalPrice = 0;
         System.out.println("\nRalph: Here is your cart. Please recheck your order.\n");
         System.out.println("========================== CART ===========================");
+        printDivider();
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
@@ -217,7 +219,7 @@ public class TugasAkhir {
 
         printDivider();
         System.out.printf("| %38s | Rp %,11d |\n","TOTAL",totalPrice);
-        printDivider();
+        printDivider2();
     }
 
     static void printMenu(){
@@ -226,6 +228,8 @@ public class TugasAkhir {
          */
 
         System.out.println("\n======================= LIST HARGA ========================");
+        printDivider();
+
         System.out.printf("|%-3s| %-14s | %5s | %12s |\n",
                 "No.",
                 "       Product Name       ",
@@ -249,15 +253,31 @@ public class TugasAkhir {
         /*
         Method untuk menampilkan pembatas.
          */
-        System.out.println("===========================================================");
+        System.out.println("+---+----------------------------+-------+----------------+");
+    }
+
+    static void printDivider2(){
+        /*
+        Method untuk menampilkan pembatas yang sedikit berbeda dengan yang satunya.
+         */
+        System.out.println("+----------------------------------------+----------------+");
     }
 
     static void printHeader(){
         /*
         Method untuk menampilkan awalan program
          */
-        System.out.println("======================= WELCOME TO ========================");
-        System.out.println("================ RAYWILFRED COMPUTER SHOP =================");
+        System.out.println(
+                ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n" +
+                ". x x x x x x x x x x x x x x x x x x x x x x x x x x x x .\n" +
+                ". x O O                                             O O x .\n" +
+                ". x O                                                 O x .\n" +
+                ". x O                   WELCOME TO                    O x .\n" +
+                ". x O            RAYWILFRED COMPUTER SHOP             O x .\n" +
+                ". x O                                                 O x .\n" +
+                ". x O O                                             O O x .\n" +
+                ". x x x x x x x x x x x x x x x x x x x x x x x x x x x x .\n" +
+                ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . .");
         System.out.println("\nHere you can buy PC parts like CPU, SSD, Mobo, and build \nyour dream PC.\n");
     }
 
